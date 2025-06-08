@@ -26,15 +26,27 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation platform('org.springframework.ai:spring-ai-bom:1.0.0')
+	// Ollama
+	implementation "org.springframework.ai:spring-ai-ollama-spring-boot-starter:1.0.0-M6"
 
-	// OpenAI API client
-	implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+
+	implementation "io.github.openfeign:feign-httpclient"
+
+	// jackson for feign client
+	implementation "io.github.openfeign:feign-jackson"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.0.0"
+	}
 }
 
 tasks.named('test') {
