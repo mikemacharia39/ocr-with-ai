@@ -1,0 +1,27 @@
+server:
+  port: 5011
+
+spring:
+  application:
+    name: ocr-with-ai
+  ai:
+    ollama:
+      chat:
+        options:
+          model: gemma3:4b
+          temperature: 0.7 # The temperature of the model. Increasing the temperature will make the model answer more creatively.
+          maxTokens: 2048  # Adjust max tokens for longer responses
+
+
+# For direct API calls to Ollama
+ollama:
+  api:
+    url: http://localhost:11434
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 180000
