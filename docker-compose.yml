@@ -1,0 +1,60 @@
+# For more on llama.cpp configuration, refer to:
+# https://cnb.cool/aigc/llama.cpp/-/blob/0996c5597f680effacc046832bb807c14900e22d/examples/server/README.md
+services:
+  llama-service:
+    image: llama_cpp_custom_image:1.0  # Use the named image
+    build:
+      context: .  # Points to the directory containing your Dockerfile
+      dockerfile: Dockerfile  # Explicitly specifies the Dockerfile
+    container_name: llama_cpp_custom
+    environment:
+      - LLAMA_ARG_MODEL=/models/gemma-3-27b-it-qat-q4_0.gguf
+      - LLAMA_ARG_CTX_SIZE=2048
+      - LLAMA_ARG_N_PARALLEL=1
+    ports:
+      - "8080:8080"  # Maps container port 8080 to host port 8001
+    volumes:
+      - ./models:/models
+    networks:
+      - llama_network  # Attach to a custom network
+    stdin_open: true
+    tty: true
+
+networks:
+  llama_network:
+    driver: bridge
+
+# Below configuration shows how to run llama.cpp on an actual server
+# refer to https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md for docker images for llama.cpp
+#  phi:
+#    image: ghcr.io/ggml-org/llama.cpp:server-cuda
+#    environment:
+#      - LLAMA_ARG_N_GPU_LAYERS=999
+#      - LLAMA_ARG_MODEL=/models/phi-4.Q4_K_M.gguf
+#    ports:
+#      - "8000:8080"
+#    volumes:
+#      - ./models:/models
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: all
+#              capabilities: [ gpu ]
+#  mistral:
+#    image: ghcr.io/ggml-org/llama.cpp:server-cuda
+#    environment:
+#      - LLAMA_ARG_N_GPU_LAYERS=999
+#      - LLAMA_ARG_MODEL=/models/mistral-small-3.1-24b-instruct-2503-q8_0.gguf
+#    ports:
+#      - "8002:8080"
+#    volumes:
+#      - ./models:/models
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: all
+#              capabilities: [gpu]
