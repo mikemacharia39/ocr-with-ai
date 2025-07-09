@@ -23,15 +23,24 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springAiVersion', "1.0.0")
+	set('springCloudVersion', "2025.0.0")
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// Ollama
-	implementation "org.springframework.ai:spring-ai-ollama-spring-boot-starter:1.0.0-M6"
+	//implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter'
+	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
+	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
 
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 
+	// Feign
 	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-
 	implementation "io.github.openfeign:feign-httpclient"
 
 	// jackson for feign client
@@ -45,7 +54,8 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.0.0"
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
 	}
 }
 
