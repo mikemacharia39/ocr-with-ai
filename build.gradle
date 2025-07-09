@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// Ollama
-	//implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter'
+	//implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter:1.0.0-M6'
 	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
 	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
 	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
