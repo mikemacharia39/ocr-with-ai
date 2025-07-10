@@ -1,4 +1,4 @@
-package com.mikehenry.ocr_with_ai.api.dto;
+package com.mikehenry.ocr_with_ai.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
