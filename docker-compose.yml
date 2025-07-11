@@ -20,11 +20,11 @@ services:
     stdin_open: true
     tty: true
 
-# psql -h host -p 5900 -U username database
+# psql -h localhost -p 5432 -U mike temperature_db
 # psql -U mike temperature_db
   postgres:
-    image: postgres:latest
-    container_name: postgres_db
+    image: postgres:15
+    container_name: postgres_with_pgvector
     environment:
       - POSTGRES_PASSWORD=s3cret
       - POSTGRES_USER=mike
@@ -33,10 +33,15 @@ services:
       - "5432:5432"
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
+    command: >
+      sh -c "apt-get update &&
+             apt-get install -y postgresql-15-pgvector &&
+             docker-entrypoint.sh postgres"
 
 # https://collabnix.com/setting-up-ollama-models-with-docker-compose-a-step-by-step-guide/
 # Using the Ollama CLI through Docker
-# docker exec -it ollama ollama pull snowflake-arctic-embed:137m
+# By default, ollama uses mxbai-embed-large model for embeddings.
+# docker exec -it ollama ollama pull mxbai-embed-large
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
