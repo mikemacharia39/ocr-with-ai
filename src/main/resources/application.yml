@@ -18,7 +18,8 @@ spring:
     vectorstore:
       pgvector:
         initialize-schema: true
-        dimensions: 1024 # Adjust dimensions based on the model used
+        schema-name:
+  #        dimensions: 1024 # Adjust dimensions based on the model used
   datasource:
     url: jdbc:postgresql://localhost:5432/temperature_db
     username: mike
